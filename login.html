@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Login | PAT Monitoring ATM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+    .floating { animation: float 6s ease-in-out infinite; }
+
+    /* Media Query untuk HP (lebar maksimal 768px) */
+    @media screen and (max-width: 768px) {
+      body {
+        overflow-x: auto; /* Memungkinkan scroll horizontal jika perlu */
+        background: #f1f5f9;
+      }
+
+      .main-wrapper {
+        /* Ubah skala agar menyesuaikan lebar layar HP */
+        transform: scale(0.5); /* Bisa Anda kecilkan lagi jadi 0.4 jika masih berantakan */
+        transform-origin: top left;
+        width: 200%; /* Menyesuaikan agar tidak terpotong */
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-900 flex items-center justify-center p-6 overflow-hidden relative">
+
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+    <div class="absolute -top-20 -left-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+    <div class="absolute top-40 right-20 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+  </div>
+
+  <div class="relative z-10 w-full max-w-sm bg-slate-800/80 backdrop-blur-2xl p-8 rounded-[1.5rem] border border-slate-700 shadow-2xl">
+    
+    <div class="text-center mb-6">
+      <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-blue-600/20 floating overflow-hidden p-2">
+        <img src="Logo-PAT.png" alt="Logo PAT" class="w-full h-full object-contain">
+      </div>
+      <h1 class="text-2xl font-bold text-white mb-1 tracking-tight">Selamat Datang</h1>
+      <p class="text-slate-400 text-sm">Silakan masuk ke sistem PAT</p>
+    </div>
+
+    <form id="loginForm" class="space-y-4">
+      <div class="relative group">
+        <span class="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-blue-500 transition-colors">
+          <i class="fa-solid fa-user"></i>
+        </span>
+        <input type="text" id="username" placeholder="Username" required 
+               class="w-full pl-12 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all">
+      </div>
+      
+      <div class="relative group">
+        <span class="absolute left-4 top-3.5 text-slate-500 group-focus-within:text-blue-500 transition-colors">
+          <i class="fa-solid fa-key"></i>
+        </span>
+        <input type="password" id="password" placeholder="Password" required 
+               class="w-full pl-12 pr-4 py-3 bg-slate-900/50 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all">
+      </div>
+
+      <button type="submit" id="loginBtn"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 active:translate-y-0">
+        Masuk
+      </button>
+    </form>
+    
+    <div id="message" class="mt-4 text-center text-sm font-medium"></div>
+  </div>
+
+  <script>
+  // Menggunakan DOMContentLoaded untuk memastikan elemen sudah siap sebelum skrip dijalankan
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('loginBtn');
+      const msg = document.getElementById('message');
+      const usernameInput = document.getElementById('username').value;
+      const passwordInput = document.getElementById('password').value;
+      
+      // Indikator loading
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+      btn.disabled = true;
+
+      // Simulasi koneksi ke server
+      setTimeout(() => {
+        if (usernameInput === 'administrator' && passwordInput === 'administrator') {
+          msg.innerHTML = '<span class="text-emerald-400">Login Berhasil!</span>';
+          window.location.href = "/dashboard";
+        } else {
+          msg.innerHTML = '<span class="text-red-400">Username atau password salah!</span>';
+          btn.innerHTML = 'Masuk';
+          btn.disabled = false;
+        }
+      }, 1500);
+    });
+  });
+  </script>
+</body>
+</html>
